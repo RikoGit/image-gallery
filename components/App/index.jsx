@@ -8,8 +8,18 @@ const App = () => {
   const [images, setImages] = useState([]);
   const galleryContainerRef = useRef(null);
   const [widthContainer, setWidthContainer] = useState(0);
+
+  const handleResize = (width) => {
+    setWidthContainer(width);
+  };
+
   useEffect(() => {
     setWidthContainer(galleryContainerRef.current.clientWidth);
+    window.addEventListener("resize", () =>
+      handleResize(galleryContainerRef.current.clientWidth)
+    );
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (

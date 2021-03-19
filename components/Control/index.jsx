@@ -26,8 +26,7 @@ const Control = ({ images, setImages }) => {
       // setImageIsLoaded(true);
     };
 
-    img.onerror = (error) => {
-      console.log(error);
+    img.onerror = () => {
       setImageHasError(true);
     };
 

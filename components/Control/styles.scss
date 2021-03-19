@@ -1,0 +1,17 @@
+.control {
+  &__input {
+    border: 1px solid #333;
+  }
+
+  &__label_error .control__input {
+    border-color: red;
+  }
+
+  &__error {
+    display: none;
+  }
+
+  &__label_error .control__error {
+    display: block;
+  }
+}

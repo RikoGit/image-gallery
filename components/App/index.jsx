@@ -9,25 +9,36 @@ const App = () => {
   const galleryContainerRef = useRef(null);
   const [widthContainer, setWidthContainer] = useState(0);
 
-  const handleResize = (width) => {
-    setWidthContainer(width);
+  const handleResize = () => {
+    setWidthContainer(galleryContainerRef.current.clientWidth);
+  };
+
+  const deleteImage = (image) => {
+    const index = images.indexOf(image);
+    const currentImages = [...images];
+    currentImages.splice(index, 1);
+    setImages(currentImages);
   };
 
   useEffect(() => {
     setWidthContainer(galleryContainerRef.current.clientWidth);
-    window.addEventListener("resize", () =>
-      handleResize(galleryContainerRef.current.clientWidth)
-    );
+    window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
-    <div>
-      <Control images={images} setImages={setImages} />
+    <div className={styles.root}>
+      <div className={styles.header}>
+        <Control images={images} setImages={setImages} />
+      </div>
       <div className={styles.galleryContainer} ref={galleryContainerRef}>
         {images && widthContainer && (
-          <Gallery images={images} widthContainer={widthContainer} />
+          <Gallery
+            images={images}
+            widthContainer={widthContainer}
+            deleteImage={deleteImage}
+          />
         )}
       </div>
     </div>

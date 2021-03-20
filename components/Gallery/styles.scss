@@ -1,2 +1,48 @@
+@import "../../constants.scss";
+
 .gallery {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+
+  &__item {
+    position: relative;
+    display: flex;
+
+    &:hover .gallery__delete {
+      display: block;
+    }
+  }
+
+  &__delete {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: $galleryPadding;
+    right: $galleryPadding;
+    display: none;
+    width: 24px;
+    height: 24px;
+    background: goldenrod;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+
+    &:focus,
+    &:active {
+      border: none;
+      outline: none;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    padding: $galleryPadding;
+    box-sizing: border-box;
+  }
 }

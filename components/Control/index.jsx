@@ -45,6 +45,8 @@ const Control = ({ images, setImages }) => {
       try {
         currentImages.push(...JSON.parse(fileReader.result).galleryImages);
         setImages(currentImages);
+        console.log("add");
+        console.log(images);
       } catch (e) {
         console.log("Not valid JSON file!");
       }

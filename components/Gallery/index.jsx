@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./styles.scss";
 
-const Gallery = ({ images, widthContainer }) => {
+const Gallery = ({ images, widthContainer, deleteImage }) => {
   const heightRow = 300;
   let calculatedWidths = images.map(
     (image) => (image.width * heightRow) / image.height
@@ -30,11 +30,24 @@ const Gallery = ({ images, widthContainer }) => {
   }, 0);
 
   return (
-    <div className={styles.gallery}>
+    <ul className={styles.gallery}>
       {images.map((image, index) => (
-        <img src={image.url} alt="" width={calculatedWidths[index]} />
+        <li
+          className={styles.gallery__item}
+          style={{ width: calculatedWidths[index] }}
+        >
+          <img src={image.url} alt="" className={styles.gallery__image} />
+          <button
+            type="button"
+            className={styles.gallery__delete}
+            title="удалить картинку"
+            onClick={() => deleteImage(image)}
+          >
+            &#10005;
+          </button>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 

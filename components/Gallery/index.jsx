@@ -34,7 +34,7 @@ const Gallery = ({ images, widthContainer, deleteImage }) => {
       {images.map((image, index) => (
         <li
           className={styles.gallery__item}
-          style={{ width: calculatedWidths[index] }}
+          style={{ width: Math.floor(calculatedWidths[index] * 100) / 100 }}
         >
           <img src={image.url} alt="" className={styles.gallery__image} />
           <button

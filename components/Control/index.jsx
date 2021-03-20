@@ -68,9 +68,6 @@ const Control = ({ images, setImages }) => {
           placeholder="Введите url"
           onChange={(event) => setUrl(event.target.value)}
         />
-        <span className={styles.control__note}>
-          картинка или файл со списком картинок в формате JSON
-        </span>
         <span className={styles.control__error}>
           ошибка при загрузке картинки
         </span>
@@ -78,14 +75,23 @@ const Control = ({ images, setImages }) => {
       <button
         type="button"
         onClick={uploadImage}
-        className={styles.control__button}
+        className={cn(
+          styles.control__button,
+          styles.control__button_type_search
+        )}
       >
-        Загрузить
+        {" "}
       </button>
-      <input
-        type="file"
+      <label
+        className={cn(
+          styles.control__button,
+          styles.control__button_type_fileupload
+        )}
         onChange={(event) => uploadFile(event.target.files[0])}
-      />
+      >
+        JSON
+        <input type="file" className={styles.control__file} />
+      </label>
     </div>
   );
 };

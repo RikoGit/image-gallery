@@ -1,19 +1,24 @@
 @import "../../constants.scss";
 
+$headerHeight: 64px;
+
 .root {
   margin: $galleryPadding;
 }
 .header {
-  border-bottom: 1px solid red;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  background: #fff;
-  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: $headerHeight;
+  background-color: $activeColor;
+  z-index: 3;
 }
 .galleryContainer {
-  margin: auto;
+  margin: calc(#{$headerHeight} + #{$galleryPadding}) auto auto;
   max-width: 860px;
   min-width: 320px;
 }

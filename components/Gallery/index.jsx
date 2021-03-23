@@ -1,5 +1,6 @@
 import React from "react";
 
+import Image from "../Image/index.jsx";
 import styles from "./styles.scss";
 
 const Gallery = ({ images, widthContainer, deleteImage }) => {
@@ -7,23 +8,25 @@ const Gallery = ({ images, widthContainer, deleteImage }) => {
   let calculatedWidths = images.map(
     (image) => (image.width * heightRow) / image.height
   );
-  let numberImagesInRow = 0;
-  console.log("app");
-  console.log(`widthContainer= ${widthContainer}`);
+  let indexRowStart = 0;
 
   calculatedWidths.reduce((acc, width, index) => {
     // eslint-disable-next-line no-param-reassign
     acc += width;
-    if (acc >= widthContainer) {
+    if (acc >= widthContainer - (index + 1 - indexRowStart) * 10) {
       calculatedWidths = calculatedWidths.map((calculatedWidth, i) => {
-        if (i >= numberImagesInRow && i <= index)
-          return (calculatedWidth * widthContainer) / acc;
+        if (i >= indexRowStart && i <= index)
+          return (
+            (calculatedWidth *
+              (widthContainer - (index + 1 - indexRowStart) * 10)) /
+            acc
+          );
 
         return calculatedWidth;
       });
       // eslint-disable-next-line no-param-reassign
       acc = 0;
-      numberImagesInRow = index + 1;
+      indexRowStart = index + 1;
     }
 
     return acc;
@@ -36,9 +39,10 @@ const Gallery = ({ images, widthContainer, deleteImage }) => {
           className={styles.gallery__item}
           style={{ width: Math.floor(calculatedWidths[index] * 100) / 100 }}
         >
-          <img src={image.url} alt="" className={styles.gallery__image} />
+          <Image url={image.url} />
           <button
             type="button"
+            aria-label="Delete image"
             className={styles.gallery__delete}
             title="удалить картинку"
             onClick={() => deleteImage(image)}

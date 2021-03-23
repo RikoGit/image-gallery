@@ -8,8 +8,27 @@
   list-style-type: none;
 
   &__item {
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: #e8e8e8 url(../../docs/images/placeholder.jpg) no-repeat 50%
+        50%;
+      background-size: auto 70%;
+      z-index: 1;
+    }
+    margin: 5px;
     position: relative;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    // border: $galleryPadding solid #fff;
+    box-sizing: border-box;
+    min-height: 50px;
+    overflow: hidden;
 
     &:hover .gallery__delete {
       display: block;
@@ -20,8 +39,8 @@
     margin: 0;
     padding: 0;
     position: absolute;
-    top: $galleryPadding;
-    right: $galleryPadding;
+    top: 0;
+    right: 0;
     display: none;
     width: 24px;
     height: 24px;
@@ -32,17 +51,12 @@
     cursor: pointer;
     border: none;
     outline: none;
+    z-index: 10;
 
     &:focus,
     &:active {
       border: none;
       outline: none;
     }
-  }
-
-  &__image {
-    width: 100%;
-    padding: $galleryPadding;
-    box-sizing: border-box;
   }
 }

@@ -1,9 +1,12 @@
 @import "../../constants.scss";
 
 $headerHeight: 64px;
+$paddingRoot: calc(#{$galleryPadding} + 20px);
 
 .root {
-  margin: $galleryPadding;
+  margin: calc(#{$headerHeight} + #{$galleryPadding}) $paddingRoot $paddingRoot;
+  display: flex;
+  justify-content: center;
 }
 .header {
   position: absolute;
@@ -18,7 +21,11 @@ $headerHeight: 64px;
   z-index: 3;
 }
 .galleryContainer {
-  margin: calc(#{$headerHeight} + #{$galleryPadding}) auto auto;
+  margin: 0;
+  margin-left: calc((-1 * (100vw - 100%) + 50px) / 2);
+  margin-right: calc((-1 * (100vw - 100%) + 50px) / 2);
+  flex-grow: 1;
   max-width: 860px;
   min-width: 320px;
+  overflow: hidden;
 }

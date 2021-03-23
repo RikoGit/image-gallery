@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 
 import Control from "../Control/index.jsx";
 import Gallery from "../Gallery/index.jsx";
+
 import styles from "./styles.scss";
 
 const App = () => {

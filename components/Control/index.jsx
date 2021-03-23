@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import cn from "classnames";
 
+import { img } from "../../utils.js";
 import styles from "./styles.scss";
 
 const Control = ({ images, setImages }) => {
   const [url, setUrl] = useState("");
-  // const [imageIsLoaded, setImageIsLoaded] = useState(null);
   const [imageHasError, setImageHasError] = useState(null);
   const currentImages = [...images];
-
-  const img = new Image();
-  img.crossOrigin = "anonymous";
 
   const uploadImage = () => {
     if (!url) return;
@@ -23,7 +20,6 @@ const Control = ({ images, setImages }) => {
       };
       currentImages.push(image);
       setImages(currentImages);
-      // setImageIsLoaded(true);
     };
 
     img.onerror = () => {
@@ -35,7 +31,6 @@ const Control = ({ images, setImages }) => {
     } catch {
       console.log("Error");
     }
-    // setImageIsLoaded(false);
     setImageHasError(false);
   };
 
@@ -45,8 +40,6 @@ const Control = ({ images, setImages }) => {
       try {
         currentImages.push(...JSON.parse(fileReader.result).galleryImages);
         setImages(currentImages);
-        console.log("add");
-        console.log(images);
       } catch (e) {
         console.log("Not valid JSON file!");
       }
@@ -74,6 +67,7 @@ const Control = ({ images, setImages }) => {
       </label>
       <button
         type="button"
+        aria-label="Upload image"
         onClick={uploadImage}
         className={cn(
           styles.control__button,

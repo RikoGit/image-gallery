@@ -3,6 +3,7 @@ import {
   SET_IMAGES,
   SET_URL,
   SET_IMAGE_HAS_ERROR,
+  IS_LOADED,
 } from "./actions.js";
 
 export default (state, { type, payload }) => {
@@ -36,6 +37,22 @@ export default (state, { type, payload }) => {
       return {
         ...state,
         imageHasError: payload,
+      };
+    }
+
+    case IS_LOADED: {
+      const images = [...state.images].map((image) => {
+        if (image === payload.image) {
+          console.log("loading");
+          console.log(payload.value);
+
+          return { ...image, isLoaded: payload.value };
+        }
+        return image;
+      });
+      return {
+        ...state,
+        images,
       };
     }
 

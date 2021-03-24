@@ -15,9 +15,9 @@
       top: 0;
       right: 0;
       bottom: 0;
-      background: #e8e8e8 url(../../docs/images/placeholder.jpg) no-repeat 50%
-        50%;
+      // background: #e8e8e8 url(../../docs/images/placeholder.jpg) no-repeat 50% 50%;
       background-size: auto 70%;
+      background: #e8e8e8;
       z-index: 1;
     }
     margin: 5px;
@@ -25,7 +25,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    // border: $galleryPadding solid #fff;
     box-sizing: border-box;
     min-height: 50px;
     overflow: hidden;

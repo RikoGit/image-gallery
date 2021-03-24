@@ -2,6 +2,7 @@ export const DELETE_IMAGE = "DELETE_IMAGE";
 export const SET_URL = "SET_URL";
 export const SET_IMAGES = "SET_IMAGES";
 export const SET_IMAGE_HAS_ERROR = "SET_IMAGE_HAS_ERROR";
+export const IS_LOADED = "IS_LOADED";
 
 export const deleteImage = (image) => ({ type: DELETE_IMAGE, payload: image });
 export const setImages = (images) => ({ type: SET_IMAGES, payload: images });
@@ -9,6 +10,10 @@ export const setUrl = (value) => ({ type: SET_URL, payload: value });
 export const setImageHasError = (value) => ({
   type: SET_IMAGE_HAS_ERROR,
   payload: value,
+});
+export const isLoaded = (image, value) => ({
+  type: IS_LOADED,
+  payload: { image, value },
 });
 
 export const uploadFile = (file) => (dispatch, getState) => {
@@ -31,16 +36,17 @@ export const uploadImage = () => (dispatch, getState) => {
   if (!url) return;
 
   const img = new Image();
-
+  const image = {
+    url,
+  };
   img.onload = () => {
     const state = getState();
     const images = [...state.images];
-    images.push({
-      url,
-      width: img.width,
-      height: img.height,
-    });
+    image.width = img.width;
+    image.height = img.height;
+    images.push(image);
     dispatch(setImages(images));
+    // dispatch(isLoaded(image, true));
   };
 
   img.onerror = () => {
@@ -64,11 +70,12 @@ export const previewFile = (file) => (dispatch, getState) => {
     img.onload = () => {
       const state = getState();
       const images = [...state.images];
-      images.push({
+      const image = {
         url: img.src,
         width: img.width,
         height: img.height,
-      });
+      };
+      images.push(image);
       dispatch(setImages(images));
     };
 

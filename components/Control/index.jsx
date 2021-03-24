@@ -12,18 +12,23 @@ const Control = ({
   previewFile,
 }) => {
   const dropareaRef = useRef(null);
+  const dropareaFileRef = useRef(null);
   const [isHighlight, setIsHighlight] = useState(false);
+
+  const handleFiles = (files) => {
+    [...files].forEach(previewFile);
+  };
+  const handleDrop = (event) => {
+    const { dataTransfer } = event;
+    const { files } = dataTransfer;
+    handleFiles(files);
+  };
 
   useEffect(() => {
     const dropArea = dropareaRef.current;
     const preventDefaults = (e) => {
       e.preventDefault();
       e.stopPropagation();
-    };
-    const handleDrop = (event) => {
-      const { dataTransfer } = event;
-      const { files } = dataTransfer;
-      [...files].forEach(previewFile);
     };
     ["dragenter", "dragover", "dragleave", "drop"].forEach((event) => {
       dropArea.addEventListener(event, preventDefaults, false);
@@ -84,20 +89,26 @@ const Control = ({
           isHighlight && styles.droparea_highlight
         )}
         ref={dropareaRef}
+        title="перенесите одно или несколько изображений в пунктирную область"
       >
-        {/* <form className={styles.droparea__form}>
+        <form className={styles.droparea__form}>
           <label
-            className={cn(styles.droparea__button, styles.control__button)}
+            className={cn(
+              styles.control__button,
+              styles.control__button_type_fileupload
+            )}
           >
             <input
               type="file"
+              ref={dropareaFileRef}
               className={styles.droparea__file}
               multiple
+              onChange={() => handleFiles(dropareaFileRef.current.files)}
               accept="image/*"
             />
             IMG
           </label>
-        </form> */}
+        </form>
       </div>
     </div>
   );

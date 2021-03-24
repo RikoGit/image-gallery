@@ -1,4 +1,5 @@
 import React from "react";
+import cn from "classnames";
 
 import Image from "../Image/index.jsx";
 import styles from "./styles.scss";
@@ -36,9 +37,14 @@ const Gallery = ({ images, widthContainer, deleteImage }) => {
     <ul className={styles.gallery}>
       {images.map((image, index) => (
         <li
-          className={styles.gallery__item}
+          className={cn(
+            styles.gallery__item,
+            image.isLoaded && styles.gallery__item_loaded
+          )}
           style={{ width: Math.floor(calculatedWidths[index] * 100) / 100 }}
         >
+          {console.log("in react")}
+          {console.log(image.isLoaded)}
           <Image url={image.url} />
           <button
             type="button"

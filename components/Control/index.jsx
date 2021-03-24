@@ -1,51 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import cn from "classnames";
 
-import { img } from "../../utils.js";
 import styles from "./styles.scss";
 
-const Control = ({ images, setImages }) => {
-  const [url, setUrl] = useState("");
-  const [imageHasError, setImageHasError] = useState(null);
-  const currentImages = [...images];
+const Control = ({
+  url,
+  imageHasError,
+  setUrl,
+  uploadImage,
+  uploadFile,
+  previewFile,
+}) => {
+  const dropareaRef = useRef(null);
+  const [isHighlight, setIsHighlight] = useState(false);
 
-  const uploadImage = () => {
-    if (!url) return;
-
-    img.onload = () => {
-      const image = {
-        url,
-        width: img.width,
-        height: img.height,
-      };
-      currentImages.push(image);
-      setImages(currentImages);
+  useEffect(() => {
+    const dropArea = dropareaRef.current;
+    const preventDefaults = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
     };
-
-    img.onerror = () => {
-      setImageHasError(true);
+    const handleDrop = (event) => {
+      const { dataTransfer } = event;
+      const { files } = dataTransfer;
+      [...files].forEach(previewFile);
     };
-
-    try {
-      img.src = url;
-    } catch {
-      console.log("Error");
-    }
-    setImageHasError(false);
-  };
-
-  const uploadFile = (file) => {
-    const fileReader = new FileReader();
-    fileReader.onloadend = () => {
-      try {
-        currentImages.push(...JSON.parse(fileReader.result).galleryImages);
-        setImages(currentImages);
-      } catch (e) {
-        console.log("Not valid JSON file!");
-      }
-    };
-    if (file !== undefined) fileReader.readAsText(file);
-  };
+    ["dragenter", "dragover", "dragleave", "drop"].forEach((event) => {
+      dropArea.addEventListener(event, preventDefaults, false);
+    });
+    ["dragenter", "dragover"].forEach((event) => {
+      dropArea.addEventListener(event, () => setIsHighlight(true), false);
+    });
+    ["dragleave", "drop"].forEach((event) => {
+      dropArea.addEventListener(event, () => setIsHighlight(false), false);
+    });
+    dropArea.addEventListener("drop", handleDrop, false);
+  }, []);
 
   return (
     <div className={styles.control}>
@@ -58,6 +48,7 @@ const Control = ({ images, setImages }) => {
         <input
           className={styles.control__input}
           type="text"
+          value={url}
           placeholder="Введите url"
           onChange={(event) => setUrl(event.target.value)}
         />
@@ -86,6 +77,28 @@ const Control = ({ images, setImages }) => {
         JSON
         <input type="file" className={styles.control__file} />
       </label>
+
+      <div
+        className={cn(
+          styles.droparea,
+          isHighlight && styles.droparea_highlight
+        )}
+        ref={dropareaRef}
+      >
+        {/* <form className={styles.droparea__form}>
+          <label
+            className={cn(styles.droparea__button, styles.control__button)}
+          >
+            <input
+              type="file"
+              className={styles.droparea__file}
+              multiple
+              accept="image/*"
+            />
+            IMG
+          </label>
+        </form> */}
+      </div>
     </div>
   );
 };

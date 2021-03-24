@@ -1,14 +1,21 @@
 @import "../../constants.scss";
 $heightControls: 34px;
+$buttonColor: #ffad07;
 
 .control {
   display: flex;
+  align-items: center;
 
   &__input {
     width: 230px;
+
+    @media only screen and (max-width: 400px) {
+      width: 145px;
+    }
+
     height: $heightControls;
     padding: 10px 35px 10px 11px;
-    border: 2px solid #ebebeb;
+    border: 2px solid $buttonColor;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     color: #333;
@@ -17,7 +24,7 @@ $heightControls: 34px;
 
     &:active,
     &:focus {
-      border-color: $buttonColor;
+      border-color: $buttonColorActive;
     }
   }
 
@@ -58,7 +65,7 @@ $heightControls: 34px;
       $width: 30px;
 
       width: $width;
-      margin-top: 2px;
+      margin-top: 0;
       margin-left: calc(-#{$width} - 2px);
       height: calc(#{$heightControls} - 4px);
       background: #fff url(../../docs/images/search.png) 50% 50% no-repeat;
@@ -67,10 +74,15 @@ $heightControls: 34px;
     }
 
     &_type_fileupload {
-      margin-left: 15px;
+      margin-left: 5px;
       display: flex;
       align-items: center;
       border: 2px solid $buttonColor;
+
+      &:focus,
+      &:active {
+        border-color: $buttonColorActive;
+      }
 
       &::before {
         margin: 0 3px 0 0;
@@ -81,6 +93,29 @@ $heightControls: 34px;
         background: url(../../docs/images/upload.png) 0px 50% no-repeat;
         background-size: 20px 20px;
       }
+    }
+  }
+
+  &__file {
+    display: none;
+  }
+}
+
+.droparea {
+  margin-left: 5px;
+  display: flex;
+  border: 2px dashed $buttonColor;
+  padding: 20px;
+
+  &.droparea_highlight {
+    border-color: $buttonColorActive;
+  }
+
+  &__form {
+  }
+
+  &__button {
+    &:hover {
     }
   }
 

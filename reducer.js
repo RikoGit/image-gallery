@@ -43,9 +43,6 @@ export default (state, { type, payload }) => {
     case IS_LOADED: {
       const images = [...state.images].map((image) => {
         if (image === payload.image) {
-          console.log("loading");
-          console.log(payload.value);
-
           return { ...image, isLoaded: payload.value };
         }
         return image;

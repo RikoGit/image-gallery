@@ -43,8 +43,6 @@ const Gallery = ({ images, widthContainer, deleteImage }) => {
           )}
           style={{ width: Math.floor(calculatedWidths[index] * 100) / 100 }}
         >
-          {console.log("in react")}
-          {console.log(image.isLoaded)}
           <Image url={image.url} />
           <button
             type="button"
